@@ -17,12 +17,12 @@ const app = express();
 // Security middlewares
 app.use(helmet());
 
-// CORS config
-const corsOrigins = env.CORS_ALLOWED_ORIGINS.split(',').map((o) => o.trim());
+// CORS config: dynamically reflect request origin to prevent deployment blocks
 app.use(cors({
-  origin: corsOrigins,
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Body parser
