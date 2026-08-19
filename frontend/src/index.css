@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981; /* Cyber Mint */
+  --color-brand-600: #059669; /* Deep Emerald */
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+  --color-brand-950: #022c22;
+  --font-sans: 'Inter', sans-serif;
+}
+
+@utility glass-panel {
+  background-color: rgba(4, 20, 12, 0.45); /* Translucent obsidian green */
+  backdrop-filter: blur(14px);
+  border-width: 1px;
+  border-color: rgba(16, 185, 129, 0.15); /* Soft mint border */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+@utility glass-panel-hover {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  
+  &:hover {
+    background-color: rgba(4, 25, 16, 0.6);
+    border-color: rgba(16, 185, 129, 0.35); /* Glowing mint border on hover */
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.08);
+  }
+}
+
+/* 3D Isometric Text Shadow styling */
+.text-3d {
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  text-shadow: 
+    0 1px 0 #059669,
+    0 2px 0 #047857,
+    0 3px 0 #047857,
+    0 4px 0 #065f46,
+    0 5px 0 #064e3b,
+    0 6px 0 #022c22,
+    0 7px 1px rgba(0, 0, 0, 0.6),
+    0 0 8px rgba(16, 185, 129, 0.4),
+    0 10px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Status Indicator Pulse & Dot CSS Rules */
+.glow-indicator {
+  position: relative;
+  display: flex;
+  height: 0.625rem;
+  width: 0.625rem;
+}
+
+.glow-indicator .ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  position: absolute;
+  display: inline-flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 9999px;
+  opacity: 0.75;
+}
+
+.glow-indicator .dot {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  height: 0.625rem;
+  width: 0.625rem;
+}
+
+@layer base {
+  body {
+    background-color: #010703; /* Deep cyber obsidian background */
+    color: #f1f5f9;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Custom scrollbars for a premium dark mode feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #010703;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #064e3b;
+  border-radius: 4px;
+  border: 1px solid #010703;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #10b981; /* Mint scroll hover */
+}

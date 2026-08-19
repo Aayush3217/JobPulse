@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobpulse-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DATABASE_URL=${DATABASE_URL}
+      - JOB_SOURCE_URL=https://remotive.com/api/remote-jobs
+      - CORS_ALLOWED_ORIGINS=http://localhost:5173
+      - INGESTION_CRON=0 */6 * * *
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jobpulse-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5000/api
+    depends_on:
+      - backend

@@ -1,0 +1,65 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Job {
+  id              String   @id @default(cuid())
+  externalId      String
+  source          String
+  title           String
+  companyName     String
+  location        String?
+  jobType         String?
+  category        String?
+  description     String?
+  url             String
+  publishedAt     DateTime?
+  sourceCreatedAt DateTime?
+  ingestedAt      DateTime @default(now())
+  contentHash     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([externalId, source])
+  @@index([title])
+  @@index([companyName])
+  @@index([location])
+  @@index([source])
+}
+
+model JobSource {
+  id                String    @id @default(cuid())
+  name              String    @unique
+  baseUrl           String
+  enabled           Boolean   @default(true)
+  lastSuccessfulRun DateTime?
+  lastFailedRun     DateTime?
+  lastStatus        String?   // "HEALTHY", "DEGRADED", "FAILED"
+  totalJobsFetched  Int       @default(0)
+  totalJobsInserted Int       @default(0)
+  totalJobsUpdated  Int       @default(0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model IngestionRun {
+  id            String    @id @default(cuid())
+  source        String
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+  status        String    // "SUCCESS", "PARTIAL", "FAILED", "RUNNING"
+  jobsFetched   Int       @default(0)
+  jobsInserted  Int       @default(0)
+  jobsUpdated   Int       @default(0)
+  jobsSkipped   Int       @default(0)
+  errorMessage  String?
+  durationMs    Int?
+
+  @@index([source])
+  @@index([startedAt])
+}
